@@ -1,6 +1,6 @@
 var blocJams = angular.module('blocJams', ['ui.router']);
 
-myAppModule.config(function($stateProvider, $locationProvider) {
+blocJams.config(function($stateProvider, $locationProvider) {
  
     $locationProvider.html5Mode({
     enabled: true,
@@ -9,7 +9,7 @@ myAppModule.config(function($stateProvider, $locationProvider) {
     
     $stateProvider
         .state('landing', {
-            url: '/landing',
+            url: '/',
             controller: 'Landing.controller',
             templateUrl: '/templates/landing.html'
         })
@@ -25,3 +25,8 @@ myAppModule.config(function($stateProvider, $locationProvider) {
         })
 
 });
+
+blocJams.controller('Landing.controller', function($scope){
+  $scope.someText = "Hello World";  
+});
+                    
