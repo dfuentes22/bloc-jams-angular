@@ -26,7 +26,18 @@ blocJams.config(function($stateProvider, $locationProvider) {
 
 });
 
-blocJams.controller('Landing.controller', function($scope){
-  $scope.someText = "Hello World";  
-});
+blocJams.controller('Landing.controller', ['$scope', function($scope){
+  $scope.tagline = "Turn the Music Up!";  
+}]);
+
+blocJams.controller('Collection.controller', ['$scope', function($scope){
+    $scope.albums = [];
+    for(i = 0; i < 12; i++){
+        $scope.albums.push(angular.copy(albumPicasso));
+    }
+}]);
+
+blocJams.controller('Album.controller', ['$scope', function($scope){
+  $scope.albums = albumPicasso;  
+}]);
                     
