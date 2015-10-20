@@ -26,6 +26,8 @@ blocJams.config(function($stateProvider, $locationProvider) {
 
 });
 
+// Controllers
+
 blocJams.controller('Landing.controller', ['$scope', function($scope){
   $scope.tagline = "Turn the Music Up!";  
 }]);
@@ -37,7 +39,66 @@ blocJams.controller('Collection.controller', ['$scope', function($scope){
     }
 }]);
 
-blocJams.controller('Album.controller', ['$scope', function($scope){
-  $scope.albums = albumPicasso;  
+blocJams.controller('Album.controller', ['$scope','SongPlayer', function($scope, SongPlayer){
+    $scope.album = albumPicasso;
+    $scope.pauseSong = function(song) {
+        SongPlayer.pause();
+    };
+    $scope.playSong = function(song) {
+        SongPlayer.setSong($scope.album, song);  
+    };
 }]);
+
+// Services
+
+blocJams.service('SongPlayer', function() {
+    
+    var currentSoundFile = null;
+    
+    var trackIndex = function(album, song) {
+        return album.songs.indexOf(song);
+    };
+    
+    // Create variables in the global scope to hold current song/album information
+    
+    
+    return {
+        currentAlbum: null,
+        currentlyPlayingSongNumber: null,
+        currentVolume: 80,
+        currentSongFromAlbum: null,
+        
+        play: function() {
+            currentSoundFile.play();
+            this.playing = true;
+        },
+        
+        pause: function() {
+            currentSoundFile.pause();
+            this.playing = false;
+        },
+        
+        setSong: function(album, song) {
+            console.log(song);
+    
+            if (currentSoundFile) {
+                currentSoundFile.stop();
+            }
+            
+            this.currentAlbum = album;
+            this.currentSongFromAlbum = song;
+            
+            
+            currentSoundFile = new buzz.sound(this.currentSongFromAlbum.audioUrl, {
+            // #2
+                formats: [ 'mp3' ],
+                preload: true
+            });
+    
+            // setVolume(currentVolume);
+            
+            this.play();
+        }
+    }
+});
                     
