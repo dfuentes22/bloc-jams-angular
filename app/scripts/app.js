@@ -45,8 +45,17 @@ blocJams.controller('Album.controller', ['$scope','SongPlayer', function($scope,
         SongPlayer.pause();
     };
     $scope.playSong = function(song) {
-        SongPlayer.setSong($scope.album, song);  
+        SongPlayer.setSong($scope.album, song); 
     };
+    
+    $scope.previousSong = function(){
+        SongPlayer.previousSong();  
+    };
+    
+    $scope.nextSong = function() {
+        SongPlayer.nextSong();  
+    };
+    
 }]);
 
 // Services
@@ -59,45 +68,74 @@ blocJams.service('SongPlayer', function() {
         return album.songs.indexOf(song);
     };
     
-    // Create variables in the global scope to hold current song/album information
-    
     
     return {
+        isPlaying: false,
         currentAlbum: null,
-        currentlyPlayingSongNumber: null,
         currentVolume: 80,
         currentSongFromAlbum: null,
         
         play: function() {
             currentSoundFile.play();
-            this.playing = true;
+            this.isPlaying = true;
         },
         
         pause: function() {
             currentSoundFile.pause();
-            this.playing = false;
+            this.isPlaying = false;
+        },
+        
+        setVolume: function(volume){
+            if(currentSoundFile) {
+                currentSoundFile.setVolume(volume);   
+            }
+            this.currentVolume = volume;
         },
         
         setSong: function(album, song) {
             console.log(song);
     
             if (currentSoundFile) {
-                currentSoundFile.stop();
+                currentSoundFile.pause();
             }
             
             this.currentAlbum = album;
             this.currentSongFromAlbum = song;
             
             
-            currentSoundFile = new buzz.sound(this.currentSongFromAlbum.audioUrl, {
+            currentSoundFile = new buzz.sound(song.audioUrl, {
             // #2
                 formats: [ 'mp3' ],
                 preload: true
             });
-    
-            // setVolume(currentVolume);
             
             this.play();
+            this.setVolume(this.currentVolume);
+        },
+        previousSong: function() {
+            var index = trackIndex(this.currentAlbum, this.currentSongFromAlbum);
+            index--;
+            if (index < 0) {
+                index = this.currentAlbum.songs.length - 1;
+            }
+            var song = this.currentAlbum.songs[index];
+            this.setSong(this.currentAlbum, song);
+        },
+        nextSong: function() {
+            var index = trackIndex(this.currentAlbum, this.currentSongFromAlbum);
+            index++;
+            if (index >= this.currentAlbum.songs.length) {
+                index = 0;
+            }
+            var song = this.currentAlbum.songs[index];
+            this.setSong(this.currentAlbum, song);
+        },
+        getTimePos: function() {
+            if (currentSoundFile) {
+                currentSoundFile.bind('timeupdate', function() {
+                    return this.getTime() / this.getDuration();
+                });
+            }
         }
     }
 });
