@@ -41,9 +41,6 @@ blocJams.controller('Collection.controller', ['$scope', function($scope){
 
 blocJams.controller('Album.controller', ['$scope','SongPlayer', function($scope, SongPlayer){
     $scope.album = albumPicasso;
-    $scope.pauseSong = function(song) {
-        SongPlayer.pause();
-    };
     $scope.playSong = function(song) {
         SongPlayer.setSong($scope.album, song); 
     };
@@ -56,11 +53,14 @@ blocJams.controller('Album.controller', ['$scope','SongPlayer', function($scope,
         SongPlayer.nextSong();  
     };
     
+    $scope.songPlayer = SongPlayer;
+
+    
 }]);
 
 // Services
 
-blocJams.service('SongPlayer', function() {
+blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
     
     var currentSoundFile = null;
     
@@ -76,8 +76,9 @@ blocJams.service('SongPlayer', function() {
         currentSongFromAlbum: null,
         
         play: function() {
-            currentSoundFile.play();
             this.isPlaying = true;
+            currentSoundFile.play();
+            console.log(this.isPlaying);
         },
         
         pause: function() {
@@ -138,5 +139,5 @@ blocJams.service('SongPlayer', function() {
             }
         }
     }
-});
+}]);
                     
