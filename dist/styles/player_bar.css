@@ -100,7 +100,7 @@ player-bar a,
     top: 0.5rem;
 }
 
-.seek-bar {
+.slider {
     height: 0.25rem;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 2px;
@@ -108,14 +108,14 @@ player-bar a,
     cursor: pointer;
 }
 
-.seek-bar .fill {
+.slider .fill {
     background: white;
     width: 36%;
     height: 0.25rem;
     border-radius: 2px;
 }
 
-.seek-bar .thumb {
+.slider .thumb {
     position: absolute;
     height: 0.25rem;
     width: 0.25rem;
@@ -133,7 +133,7 @@ player-bar a,
 
 }
 
-.seek-bar:hover .thumb {
+.slider:hover .thumb {
     width: 1.1rem;
     height: 1.1rem;
     margin-top: -0.6rem;
@@ -151,7 +151,7 @@ player-bar a,
     vertical-align: middle;
 }
 
-.player-bar .volume .seek-bar {
+.player-bar .volume .slider {
     display: inline-block;
     width: 5.75rem;
     vertical-align: middle;

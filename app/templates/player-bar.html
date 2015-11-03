@@ -1,0 +1,33 @@
+<section class="player-bar" ng-controller="PlayerBar.controller">
+    <div class="container">
+        <div class="player-bar-control-group left-controls">
+            <a class="previous" ng-click="previousSong()">
+                <span class="ion-skip-backward"></span>
+            </a>
+            <a class="play-pause">
+                <span class="ion-play" ng-show="!songPlayer.isPlaying" ng-click="songPlayer.play()"></span>
+                <span class="ion-pause" ng-show="songPlayer.isPlaying" ng-click="songPlayer.pause()"></span>
+            </a>
+            <a class="next" ng-click="nextSong()">
+                <span class="ion-skip-forward"></span>
+            </a>
+        </div> 
+        <!-- player-bar-control-group -->
+        <div class="player-bar-control-group currently-playing">
+            <h2 class="song-name">{{songPlayer.currentSongFromAlbum.name}}</h2>
+            <h2 class="artist-song-mobile">{{songPlayer.currentSongFromAlbum.name}} - {{album.artist}}</h2>
+            <div class="seek-control">
+                <slider value="{{playTime}}" max="{{songPlayer.currentSong.length}}" on-change="songPlayer.seek(value)"></slider>
+                <div class="current-time"></div>
+                <div class="total"></div>
+            </div>
+            <h3 class="artist-name">{{album.artist}}</h3>
+        </div>
+        <div class="player-bar-control-group right-controls">
+            <div class="volume">
+                <span class="ion-volume-high"></span>
+                <slider value='{{ songPlayer.volume }}' max='100' on-change='songPlayer.setVolume(value)'></slider>
+            </div>
+        </div>
+    </div>
+</section>
