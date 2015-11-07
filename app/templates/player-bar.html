@@ -18,8 +18,8 @@
             <h2 class="artist-song-mobile">{{songPlayer.currentSongFromAlbum.name}} - {{album.artist}}</h2>
             <div class="seek-control">
                 <slider value="{{playTime}}" max="{{songPlayer.currentSong.length}}" on-change="songPlayer.seek(value)"></slider>
-                <div class="current-time"></div>
-                <div class="total"></div>
+                <div class="current-time">{{ playTime | timecode}}</div>
+                <div class="total">{{songPlayer.currentSong.length}}</div>
             </div>
             <h3 class="artist-name">{{album.artist}}</h3>
         </div>

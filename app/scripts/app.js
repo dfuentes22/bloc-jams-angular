@@ -91,7 +91,7 @@ blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
     return {
         isPlaying: false,
         currentAlbum: null,
-        currentVolume: 80,
+        currentVolume: 30,
         currentSongFromAlbum: null,
         
         play: function() {
@@ -264,3 +264,22 @@ blocJams.directive('slider', ['$document', function($document){
     }
   };
 }]);
+
+blocJams.filter('timecode', function () {
+    return function (timeInSeconds) {
+    var time = parseFloat(timeInSeconds);
+    
+    var minutes = Math.floor(time / 60);
+    var seconds = Math.floor(time % 60);
+    var output = minutes + ':';
+
+    if (seconds < 10) {
+      output += '0';
+    }
+
+    output += seconds;
+
+    return output;
+    };
+});
+
