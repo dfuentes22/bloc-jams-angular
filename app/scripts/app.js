@@ -48,6 +48,7 @@ blocJams.controller('Album.controller', ['$scope','SongPlayer', function($scope,
 
 blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
     $scope.songPlayer = SongPlayer;
+    $scope.album = albumPicasso;
     $scope.playSong = function(song) {
         SongPlayer.setSong($scope.album, song); 
     };
