@@ -36,7 +36,7 @@ blocJams.controller('Collection.controller', ['$scope', function($scope){
     $scope.albums = [];
     for(i = 0; i < 12; i++){
         $scope.albums.push(angular.copy(albumPicasso));
-    }
+    };
 }]);
 
 blocJams.controller('Album.controller', ['$scope','SongPlayer', function($scope, SongPlayer){
